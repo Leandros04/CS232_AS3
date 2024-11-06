@@ -52,5 +52,6 @@ bool isEmpty(STACK *stack);
 void push(STACK *stack, int **square, int row, int col, int value);
 NODE *pop(STACK *stack);
 NODE *top(STACK *stack);
+void freeStack(STACK *stack);
 
 #endif

@@ -6,10 +6,9 @@
  *  This program conatains all function declarations for the stack.
  * 
  *  @author Christos Michael (ID: 1135102 / UC1070456)
- *          Leandros Antoniadis (ID:  / UC )
+ *         Leandros Antoniades (ID: 1119296 / UC1069738)
  * 
  *  @bug No known bugs.
- * 
  */
 #ifndef STACK_H
 #define STACK_H
@@ -21,16 +20,13 @@
  * 
  *  Each node has a 2D array of integers with dimensions row and column
  *  and a pointer to the next stack node. 
- * 
  */
-typedef struct node{
-
+typedef struct node {
     int **square; //  2D array representing the Latin Square.
     int row;
     int col;
     struct node *next;
-
-}NODE;
+} NODE;
 
 /**
  *  @brief Represents a stack.
@@ -39,12 +35,10 @@ typedef struct node{
  *  current size of the stack.
  * 
  */
-typedef struct{
-
+typedef struct {
     NODE *top;
     int size;
-
-}STACK;
+} STACK;
 
 //  Stack function declarations.
 STACK *initStack();

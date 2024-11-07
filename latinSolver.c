@@ -20,6 +20,7 @@
 
 //  Function declarations.
 bool readLatinSquare(FILE *infile, int size, int **square);
+bool isSolved(int **square, int size);
 void displayLatinSquare(int size, int **square);
 bool findEmptyCell(int **square, int size, int *row, int *col);
 
@@ -116,6 +117,14 @@ bool readLatinSquare(FILE *infile, int size, int **square){
 
     }
 
+    bool solved = isSolved(square,size);
+
+    return solved;
+
+}
+
+bool isSolved(int **square, int size){
+
     int count = 0; 
     
     //  Assuming that only valid latin square are read from the file if there are no emtpy cells that mean that the latinsquare is solved
@@ -143,42 +152,6 @@ bool readLatinSquare(FILE *infile, int size, int **square){
         return false;
 
     }
-
-}
-
-/**
- *  @brief Finds and returns the first empty cell of the current Latin Square.
- * 
- *  This function finds where an empty cell appears for the first time in the 
- *  current Latin Square and returns the row and column value of that cell.
- * 
- *  @param square 2D array representing the Latin Square.
- *  @param size The size of square array.
- *  @param row Pointer to the row of the first empty cell.
- *  @param col Pointer to the column of the first empty cell.
- * 
- *  @return Returns true if an empty cell was found, else it returns false. 
- * 
- */
-bool findEmptyCell(int **square, int size, int *row, int *col){
-
-    for(int i=0; i<size; i++){
-        
-        for(int j=0; j<size; j++){
-
-            if(square[i][j] == 0){ //  If this is true that means an empty cell was found inside the array.
-
-                *row = i;
-                *col = j;
-                return true;
-
-            }
-
-        }
-
-    }
-
-    return false;
 
 }
 
@@ -234,6 +207,42 @@ void displayLatinSquare(int size, int **square){
     }
 
     printf("+\n");
+
+}
+
+/**
+ *  @brief Finds and returns the first empty cell of the current Latin Square.
+ * 
+ *  This function finds where an empty cell appears for the first time in the 
+ *  current Latin Square and returns the row and column value of that cell.
+ * 
+ *  @param square 2D array representing the Latin Square.
+ *  @param size The size of square array.
+ *  @param row Pointer to the row of the first empty cell.
+ *  @param col Pointer to the column of the first empty cell.
+ * 
+ *  @return Returns true if an empty cell was found, else it returns false. 
+ * 
+ */
+bool findEmptyCell(int **square, int size, int *row, int *col){
+
+    for(int i=0; i<size; i++){
+        
+        for(int j=0; j<size; j++){
+
+            if(square[i][j] == 0){ //  If this is true that means an empty cell was found inside the array.
+
+                *row = i;
+                *col = j;
+                return true;
+
+            }
+
+        }
+
+    }
+
+    return false;
 
 }
 

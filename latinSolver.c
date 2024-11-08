@@ -180,6 +180,116 @@ bool findEmptyCell(int **square, int size, int *row, int *col) {
     return false;
 }
 
+
+void solveLatinSquare(int **square, int size){
+
+    bool solved = false; //  Boolean to check if the Latin Square is solved.
+    int row;
+    int col;
+    findEmptyCell(square,size,&row,&col);
+    int steps = 0; //  Counter for the total steps.
+    int pushCount = 0; //  Counter for pushes.
+    int popCount = 0; //  Counter for pops.
+
+    STACK *stack = initStack();
+
+    while(solved == false){
+
+        steps++;
+        bool numberExists = false; //  Bool to check if there is a valid number to fill the empty cell.
+        bool valid = true;
+        int element = square[row][col]; //  Used to check if the number is bigger than the previously inserted number(used for backtracking case).
+        int validNum = 0;
+
+        for(int i=1; i<=size; i++){ //  For loop to check if there are any valid numbers to insert in the empty cell.
+
+            valid = true;
+
+            for(int j=0; j<size; j++){
+
+                //  Case were the same number is already in the same row or column of the square.
+                if(i == abs(square[j][col]) || i == abs(square[row][j])){
+
+                    valid = false;
+                    break; //  Breaks from the inner for loop.
+
+                }  
+
+            }
+
+            if(i != element && valid == true){
+
+                validNum = i;
+                break;
+
+            }
+
+        }
+
+        printf("VALID NUM = %d\n", validNum);
+        if(valid == true && validNum > element){
+
+            pushCount++;
+            numberExists = true;
+            square[row][col] = validNum;
+            solved = isSolved(square,size);
+            push(stack,square,row,col); //  Pushes the new square in the stack.
+            findEmptyCell(square,size,&row,&col); //  Finds a new empty cell.
+            printf("PUSH: STEP %d\n", steps);
+            displayLatinSquare(size,square);
+
+        }
+
+        if(numberExists == false){
+
+            if(stack->size == 0){
+
+                printf("Error: There are no stages to backtrack to. The Latin Square is unsolvable.\n");
+                exit(-1);
+
+            }
+
+            popCount++;
+            NODE *poppedNode = pop(stack); //  Pops the previous state from the stack.
+
+            //  Restores the 2D array from the popped node.(previous state)
+            for(int i=0; i<poppedNode->row; i++){
+
+                for(int j=0; j<poppedNode->col; j++){
+
+                    square[i][j] = poppedNode->square[i][j];
+
+                }
+            }
+
+            //  Updates the row and col to the position of the last placed number.
+            row = poppedNode->row;
+            col = poppedNode->col;
+
+            //  Frees the memory of the popped node.
+            for(int i=0; i<poppedNode->row; i++){
+                
+                free(poppedNode->square[i]);
+
+            }
+            
+            free(poppedNode->square);
+            free(poppedNode);
+
+            printf("POP: STEP %d\n", steps);
+            displayLatinSquare(size,square);
+
+            printf("Backtracking to row: %d, col: %d\n", row, col);
+
+        }
+
+    }
+
+    printf("PUSH NUM: %d\n", pushCount);
+    printf("POP NUM: %d\n", popCount);
+
+}
+
 int main(int argc, char *argv[]) {
     if(argc > 2) { //  Checks if there are too many arguments.
         printf("Error: Too many arguments.\n");

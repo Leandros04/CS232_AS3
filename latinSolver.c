@@ -14,7 +14,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
-#include<stack.h>
+#include "stack.h"
 
 #define N 9 //  Max Latin Square the program can handle.(else if N > 9 the displayLatinSquare function does not work properly)
 

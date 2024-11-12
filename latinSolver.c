@@ -10,11 +10,11 @@
  *          Leandros Antoniades (ID: 1119296 / UC1069738)
  * 
  *  @bug No known bugs.
- * 
  */
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
+#include<stack.h>
 
 #define N 9 //  Max Latin Square the program can handle.(else if N > 9 the displayLatinSquare function does not work properly)
 
@@ -233,7 +233,7 @@ void solveLatinSquare(int **square, int size){
             numberExists = true;
             square[row][col] = validNum;
             solved = isSolved(square,size);
-            push(stack,square,row,col); //  Pushes the new square in the stack.
+            push(stack,square,size,row,col); //  Pushes the new square in the stack.
             findEmptyCell(square,size,&row,&col); //  Finds a new empty cell.
             printf("PUSH: STEP %d\n", steps);
             displayLatinSquare(size,square);

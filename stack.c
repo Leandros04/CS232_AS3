@@ -59,7 +59,7 @@ bool isEmpty(STACK *stack) {
  *  @param col Column where an element was last inserted.
  * 
  */
-void push(STACK *stack, int **square, int row, int col){
+void push(STACK *stack, int **square, int size, int row, int col){
 
     NODE *p = NULL;
     
@@ -91,34 +91,24 @@ void push(STACK *stack, int **square, int row, int col){
     }
 
     //  Allocates memory for each row and copies the data.
-    for(int i=0; i<row; i++){
 
-        p->square[i] = (int *)malloc(col*sizeof(int));
-
-        if(p->square[i] == NULL){
-
+    for (int i = 0; i < size; i++) {
+        p->square[i] = (int *)malloc(size * sizeof(int));
+        
+        if (p->square[i] == NULL) {
             printf("Error: Failed to allocate memory for the 2D array row.\n");
-
-            //  Frees the previously allocated memory in case of failure.
-            for(int j=0; j<i; j++){
-
+            for (int j = 0; j < i; j++) {
                 free(p->square[j]);
-            
             }
-
             free(p->square);
             free(p);
             exit(-1);
-
         }
 
-        //  Copies the data from the original array.
-        for(int j=0; j<col; j++){
-
+        // Copy data from the original array
+        for (int j = 0; j < size; j++) {
             p->square[i][j] = square[i][j];
-
         }
-        
     }
 
     p->row = row;
@@ -187,7 +177,6 @@ NODE *top(STACK *stack) {
 void freeStack(STACK *stack) {
     if(stack == NULL) {
         printf("Error: stack is empty. There is nothing to free.\n");
-        free(stack);
         return;
     }
 

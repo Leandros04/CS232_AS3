@@ -43,7 +43,7 @@ typedef struct {
 //  Stack function declarations.
 STACK *initStack();
 bool isEmpty(STACK *stack);
-void push(STACK *stack, int **square, int row, int col);
+void push(STACK *stack, int **square, int size, int row, int col);
 NODE *pop(STACK *stack);
 NODE *top(STACK *stack);
 void freeStack(STACK *stack);

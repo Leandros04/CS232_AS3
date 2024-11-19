@@ -35,9 +35,11 @@ all:
 	$(MAKE)
 	$(MAKE) doxy
 
-# To make the project documentation with Doxygen
+# To make the project documentation with Doxygen, enabling call graph and DOT graph generation
 doxy:
-	$(DOXYGEN) *.conf &> doxygen.log
+	echo "CALL_GRAPH = YES" >> Doxyfile
+	echo "HAVE_DOT = YES" >> Doxyfile
+	$(DOXYGEN) Doxyfile &> doxygen.log
 
 # To clean .o files: "make clean"
 clean:

@@ -1,11 +1,15 @@
 /**
  *  @mainpage Latin Square
  *  @file stack.c
+ *  @brief Source file for the stack.
+ * 
+ *  This program conatains all function implementations for the stack.
  * 
  *  @author Christos Michael (ID: 1135102 / UC1070456)
  *          Leandros Antoniades (ID: 1119296 / UC1069738)
  * 
  *  @bug No known bugs.
+ * 
  */
 #include<stdio.h>
 #include<stdlib.h>
@@ -14,24 +18,27 @@
 /**
  *  @brief Initializes a new empty stack.
  * 
- *  Allocates memory for a stack and initializes the stack's field.
+ *  Allocates memory for a stack and initializes the stack's fields.
  *  
  *  @return Returns a pointer to the stack. 
- * 
+ *   
  */
-STACK *initStack() { 
+STACK *initStack(){
 
     STACK *stack = (STACK *)malloc(sizeof(STACK)); //  Allocates memory for the stack.
 
-    if(stack == NULL) { //  Checks if the memory allocation was successful.
+    if(stack == NULL){
+
         printf("Error: Failed to allocate memorty for the stack.\n");
         exit(-1);
+
     }
 
-    stack -> top = NULL;
-    stack -> size = 0;
+    stack->top = NULL;
+    stack->size = 0;
 
     return stack;
+    
 }
 
 /**
@@ -40,12 +47,14 @@ STACK *initStack() {
  *  @param stack Pointer to the stack that will be checked if it is empty.
  * 
  *  @return Returns true if the stack is empty, else it returns false.
+ * 
  */
-bool isEmpty(STACK *stack) {
-    if(stack -> size == 0 || stack == NULL) 
-        return true;
-    else 
-        return false;
+bool isEmpty(STACK *stack){
+
+    if(stack->size == 0 || stack == NULL) return true;
+
+    else return false;
+
 }
 
 /**
@@ -80,7 +89,7 @@ void push(STACK *stack, int **square, int size, int row, int col){
     }
 
     //  Allocates memory for the 2D array in the node.
-    p->square = (int **)malloc(row*sizeof(int *));
+    p->square = (int **)malloc(size*sizeof(int *));
 
     if(p->square == NULL){
 
@@ -91,24 +100,30 @@ void push(STACK *stack, int **square, int size, int row, int col){
     }
 
     //  Allocates memory for each row and copies the data.
+    for(int i=0; i<size; i++){
 
-    for (int i = 0; i < size; i++) {
-        p->square[i] = (int *)malloc(size * sizeof(int));
-        
-        if (p->square[i] == NULL) {
+        p->square[i] = (int *)malloc(size*sizeof(int));
+
+        if(p->square[i] == NULL){
+
             printf("Error: Failed to allocate memory for the 2D array row.\n");
-            for (int j = 0; j < i; j++) {
-                free(p->square[j]);
-            }
+
+            //  Frees the previously allocated memory in case of failure.
+            for(int j=0; j<i; j++) free(p->square[j]);
+
             free(p->square);
             free(p);
             exit(-1);
+
         }
 
-        // Copy data from the original array
-        for (int j = 0; j < size; j++) {
+        //  Copies the data from the original array.
+        for(int j=0; j<size; j++){
+
             p->square[i][j] = square[i][j];
+
         }
+        
     }
 
     p->row = row;
@@ -155,13 +170,21 @@ NODE *pop(STACK *stack){
  *  @return Returns NULL if the stack is empty, else it returns a pointer to the top node of the stack.
  * 
  */
-NODE *top(STACK *stack) {
-    if(isEmpty(stack) == true) {
-        printf("Error: The stack is empty.\n");
+NODE *top(STACK *stack){
+
+    if(isEmpty(stack) == true){
+
+        printf("The stack is empty, it does any nodes.\n");
         return NULL;
-    } else {
-        return stack -> top;
+
     }
+
+    else{
+
+        return stack->top;
+    
+    }
+
 }
 
 /**
@@ -173,31 +196,44 @@ NODE *top(STACK *stack) {
  *  @param stack A pointer to the stack to be freed.
  * 
  *  @return Returns void. 
+ * 
  */
-void freeStack(STACK *stack) {
-    if(stack == NULL) {
-        printf("Error: stack is empty. There is nothing to free.\n");
+void freeStack(STACK *stack, int size) {
+
+    if(stack == NULL){
+
+        printf("The stack is empty. There are no nodes to free\n");
+        free(stack);
         return;
+
     }
 
     NODE *current = stack->top;
 
-    while(current != NULL) {
+    while(current != NULL){
+
         NODE *next = current->next;
 
         //  Frees each row in the 2D array square, if it exists.
-        if(current -> square != NULL) {
-            for(int i = 0; i < current -> row; i++) {
+        if(current->square != NULL){
+
+            for(int i=0; i<size; i++){
+
                 free(current->square[i]);
+
             }
 
-            free(current -> square); //  Frees the 2D array.
+            free(current->square);
+
         }
 
         //  Frees the node itself.
         free(current);
         current = next;
+
     }
 
     free(stack); //  Frees the stack structure.
+
 }
+

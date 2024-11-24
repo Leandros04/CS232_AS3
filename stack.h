@@ -1,32 +1,36 @@
 /**
  *  @mainpage Latin Square
  *  @file stack.h
- *  @brief Header file that implements a stack.\
+ *  @brief Header file that implements a stack.
  * 
  *  This program conatains all function declarations for the stack.
  * 
  *  @author Christos Michael (ID: 1135102 / UC1070456)
- *         Leandros Antoniades (ID: 1119296 / UC1069738)
+ *          Leandros Antoniades (ID: 1119296 / UC1069738)
  * 
  *  @bug No known bugs.
+ * 
  */
 #ifndef STACK_H
 #define STACK_H
 
 #include<stdbool.h>
 
-/**
+/** 
  *  @brief Represents a stack node.
  * 
  *  Each node has a 2D array of integers with dimensions row and column
  *  and a pointer to the next stack node. 
+ * 
  */
-typedef struct node {
+typedef struct node{
+
     int **square; //  2D array representing the Latin Square.
     int row;
     int col;
     struct node *next;
-} NODE;
+
+}NODE;
 
 /**
  *  @brief Represents a stack.
@@ -35,10 +39,12 @@ typedef struct node {
  *  current size of the stack.
  * 
  */
-typedef struct {
+typedef struct{
+
     NODE *top;
     int size;
-} STACK;
+
+}STACK;
 
 //  Stack function declarations.
 STACK *initStack();
@@ -46,6 +52,6 @@ bool isEmpty(STACK *stack);
 void push(STACK *stack, int **square, int size, int row, int col);
 NODE *pop(STACK *stack);
 NODE *top(STACK *stack);
-void freeStack(STACK *stack);
+void freeStack(STACK *stack, int size);
 
 #endif

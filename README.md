@@ -31,5 +31,7 @@ make
 ```bash
 ./latinSolver <inputFile.txt>
 ```
+When using this command the program will attempt so solve the Latin Square inside the input file.
+
 ---
 _End of file_
